@@ -1,12 +1,42 @@
-// Create event listeners
-document.getElementById('test').addEventListener('mousedown', mouseDown);
-document.getElementById('test').addEventListener('mouseup',mouseUp)
-document.getElementById('test').addEventListener('mousemove',mouseMove)
-
 // Define variables
 var locked = false;
 var CordStart;
 var CordEnd;
+var slideIndex = 0;
+let slides = document.querySelectorAll('#test li')
+console.log(slides.length)
+
+
+// Create event listeners
+document.getElementById('test').addEventListener('mousedown', mouseDown);
+document.getElementById('test').addEventListener('mouseup',mouseUp)
+document.getElementById('test').addEventListener('mousemove',mouseMove)
+document.querySelector('.prev').addEventListener('click',prev)
+document.querySelector('.next').addEventListener('click',next)
+
+
+function prev(){
+    slides[slideIndex].classList.remove('active')
+    console.log(slideIndex)
+    if(slideIndex === 0){
+        slideIndex = slides.length - 1
+    }else{
+        slideIndex = slideIndex - 1
+    }
+    slides[slideIndex].classList.add('active')
+
+}
+function next(){
+    console.log('next');
+    slides[slideIndex].classList.remove('active')
+    if(slideIndex === 4){
+        slideIndex = 0
+    }else{
+        slideIndex = slideIndex + 1
+    }
+    slides[slideIndex].classList.add('active')
+}
+
 
 // Triger mouseDown event
 function mouseDown(e){
@@ -36,11 +66,12 @@ function mouseUp(e){
 
     // Check in which direction user swipe
     if(CordStart < CordEnd){
-
+        document.querySelector('.next').click()
         console.log('right');
 
-    }else{
-
+    }
+    if(CordStart > CordEnd){
+        document.querySelector('.prev').click()
         console.log('left');
         
     }
